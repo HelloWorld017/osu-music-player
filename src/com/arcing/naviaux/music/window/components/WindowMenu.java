@@ -26,16 +26,9 @@ public class WindowMenu extends JMenuBar {
 		JMenu help = new JMenu("Help");
 		
 		// File Items
-		JMenuItem addSong = new JMenuItem("Add Song");
 		JMenuItem addFolder = new JMenuItem("Add Folder");
 		JMenuItem miniSwitchF = new JMenuItem("Mini Player");
 		
-		addSong.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Library.addSongToLibrary();
-			}
-		});
 		addFolder.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -52,7 +45,6 @@ public class WindowMenu extends JMenuBar {
 			}
 		});
 		
-		fileMenu.add(addSong);
 		fileMenu.add(addFolder);
 		fileMenu.add(miniSwitchF);
 		
