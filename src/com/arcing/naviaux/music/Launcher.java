@@ -1,19 +1,17 @@
 package com.arcing.naviaux.music;
 
-import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.SwingUtilities;
 
 import javafx.embed.swing.JFXPanel;
 
-import com.He.W.onebone.Circuit.Cu.exception.ParseException;
 import com.arcing.naviaux.music.library.Library;
 import com.arcing.naviaux.music.player.PlayingManager;
 import com.arcing.naviaux.music.window.MusicSelectionWindow;
 
 public class Launcher {
-	public static void main(String[] args) throws InterruptedException, IOException, ParseException {
+	public static void main(String[] args) throws InterruptedException{
 		System.out.println("Begining Program Excecution");
 		System.out.println("Creating Music Selection Window");
 		final CountDownLatch latch = new CountDownLatch(1);
@@ -24,7 +22,12 @@ public class Launcher {
 		    }
 		});
 		latch.await();
-		Library.createLibrary();
+		try{
+			Library.createLibrary();
+		}catch(Exception e){
+			e.printStackTrace();
+			System.exit(0);
+		}
 		PlayingManager.buildRepeatList();
 		MusicSelectionWindow msw = new MusicSelectionWindow();
 		msw.setVisible(true);

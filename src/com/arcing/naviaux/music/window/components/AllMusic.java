@@ -32,6 +32,7 @@ public class AllMusic extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				Library.selectedSong = mainMusic.getSelectedIndex();
+				PlayingManager.playSelected();
 			}
 		});
 		

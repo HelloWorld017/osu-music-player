@@ -33,11 +33,13 @@ public class Library {
 			fis = new FileInputStream(f);
 		} catch (FileNotFoundException e) {
 			createEmptyLibrary();
+			System.out.println("Created library.ccs");
 			return;
 		}
 		InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
 		BufferedReader br = new BufferedReader(isr);
-		TreeMap<String, String> map = CCSParser.parseCCS(br).get("library");
+		//System.out.println(CCSParser.parseCCS(br));
+		TreeMap<String, String> map = CCSParser.parseCCS(br);
 		br.close();
 		
 		br = null;
@@ -50,6 +52,8 @@ public class Library {
 					library.put(k, new File(v));
 				}
 			});
+		}else{
+			System.out.println("Null map found! Ignoring...");
 		}
 		map = null;
 	}
@@ -166,28 +170,23 @@ public class Library {
 	public static TreeMap<String, String> attr;
 	public static void saveLibrary() throws IOException {
 		attr = new TreeMap<String, String>();
-		TreeMap<String, TreeMap<String, String>> content = new TreeMap<>();
 		library.forEach((k,v) -> {
 			attr.put(k, v.getAbsolutePath());
 		});
-		content.put("Library", attr);
 		File f = new File("library.ccs");
 		FileOutputStream fos = new FileOutputStream(f);
 		OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
 		BufferedWriter bw = new BufferedWriter(osw);
-		CCSGenerator.genCCS(bw, content, true);
+		CCSGenerator.genCCS(bw, attr, true);
 		bw = null;
 		osw = null;
 		fos = null;
 		f = null;
-		content = null;
 		attr = null;
 	}
 	
 	public static void createEmptyLibrary() throws IOException{
 		TreeMap<String, String> attr = new TreeMap<String, String>();
-		TreeMap<String, TreeMap<String, String>> content = new TreeMap<>();
-		content.put("Library", attr);
 		File f = new File("library.ccs");
 		if(f.exists()){
 			System.out.println("File already exists!");
@@ -197,12 +196,11 @@ public class Library {
 		FileOutputStream fos = new FileOutputStream(f);
 		OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
 		BufferedWriter bw = new BufferedWriter(osw);
-		CCSGenerator.genCCS(bw, content, true);
+		CCSGenerator.genCCS(bw, attr, true);
 		bw = null;
 		osw = null;
 		fos = null;
 		f = null;
-		content = null;
 		attr = null;
 	}
 	

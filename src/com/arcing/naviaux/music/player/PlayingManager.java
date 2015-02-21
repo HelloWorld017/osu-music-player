@@ -42,7 +42,19 @@ public abstract class PlayingManager {
 	}
 	
 	public static void playSelected() {
-		if (player != null && player.getStatus() == MediaPlayer.Status.PAUSED) {
+		currentlyPlaying = new Media(new File(Library.getLibraryFiles()[Library.selectedSong]).toURI().toString());
+		
+		if(player != null && player.getStatus() != MediaPlayer.Status.PAUSED){
+			stopPlaying();
+		}
+		
+		player = new MediaPlayer(currentlyPlaying);
+		player.setOnEndOfMedia(() -> {
+			nextTrack();
+		});
+		
+		
+		/*if (player != null && player.getStatus() == MediaPlayer.Status.PAUSED) {
 		} else {
 			stopPlaying();
 			if (trackPlaying == -1) 
@@ -56,7 +68,7 @@ public abstract class PlayingManager {
 					nextTrack();
 				}
 			});
-		}
+		}*/
 		MiniPlayer.updateSongText();
 		player.play();
 		player.setVolume(volume);
